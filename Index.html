@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clima en Ciudad Victoria</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      color: white;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .card {
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Clima en Ciudad Victoria</h1>
+    <p id="descripcion">Cargando...</p>
+    <p id="temperatura"></p>
+    <p id="humedad"></p>
+    <p id="viento"></p>
+    <p id="actualizacion"></p>
+  </div>
+
+  <script>
+    const API_KEY = "TU_API_KEY"; // Reemplaza con tu API key
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=Ciudad+Victoria,MX&appid=${API_KEY}&units=metric&lang=es`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("descripcion").textContent = "Clima: " + data.weather[0].description;
+        document.getElementById("temperatura").textContent = "Temperatura: " + data.main.temp + " °C";
+        document.getElementById("humedad").textContent = "Humedad: " + data.main.humidity + "%";
+        document.getElementById("viento").textContent = "Viento: " + data.wind.speed + " m/s";
+        document.getElementById("actualizacion").textContent = "Última actualización: " + new Date().toLocaleString();
+      })
+      .catch(error => {
+        document.getElementById("descripcion").textContent = "Error al obtener los datos.";
+        console.error("Error al obtener el clima:", error);
+      });
+  </script>
+</body>
+</html>
